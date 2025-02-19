@@ -3,10 +3,18 @@ import { InviteLinkInput } from './invite-link-input'
 import { Ranking } from './ranking'
 import { Stats } from './stats'
 
-import logo from '../../assets/logo.svg'
+import logo from '../../../assets/logo.svg'
 
-export default function InvitePage() {
-  const inviteLink = 'devstage.com/codecraft-summit-2025/1289'
+interface InvitePageProps {
+  params: Promise<{
+    subscriberId: string
+  }>
+}
+
+export default async function InvitePage({ params }: InvitePageProps) {
+  const { subscriberId } = await params
+
+  const inviteLink = `http://localhost:3333/invites/${subscriberId}`
 
   return (
     <div className="min-h-dvh flex items-center justify-between gap-16 flex-col md:flex-row">
@@ -35,7 +43,7 @@ export default function InvitePage() {
           </div>
         </div>
         <InviteLinkInput inviteLink={inviteLink} />
-        <Stats />
+        <Stats subscriberId={subscriberId} />
       </div>
       <Ranking />
     </div>
